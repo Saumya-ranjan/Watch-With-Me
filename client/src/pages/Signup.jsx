@@ -21,6 +21,7 @@ export default function Signup() {
   const handleSignIn = async () => {
     try {
       const { email, password } = formValues;
+
       await createUserWithEmailAndPassword(firebaseAuth, email, password);
     } catch (error) {
       console.log(error);
@@ -28,8 +29,10 @@ export default function Signup() {
   };
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (currentUser) navigate("/");
+    if (currentUser) navigate("/signup");
   });
+
+
 
   return (
     <Container showPassword={showPassword}>
@@ -51,12 +54,13 @@ export default function Signup() {
               onChange={(e) =>
                 setFormValues({
                   ...formValues,
-                  [e.target.name]: e.target.value,
+                  [e.target.name]: e.target.value, // Email : Email Value
                 })
               }
               name="email"
               value={formValues.email}
             />
+            
             {showPassword && (
               <input
                 type="password"
@@ -75,7 +79,7 @@ export default function Signup() {
               <button onClick={() => setShowPassword(true)}>Get Started</button>
             )}
           </div>
-          {showPassword && <button onClick={handleSignIn}>Log In</button>}
+          {showPassword && <button onClick={handleSignIn}>Sign Up</button>}
         </div>
       </div>
     </Container>
